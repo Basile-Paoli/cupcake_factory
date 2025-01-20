@@ -6,17 +6,20 @@ import java.util.List;
 public class CupcakeFactory {
     private final IngredientStorage storage;
     private final Prices prices;
+    private List<OrderLog> orderLogs;
 
     public CupcakeFactory(IngredientStorage storage, Prices prices) {
         this.storage = storage;
         this.prices = prices;
+        this.orderLogs = List.of();
     }
 
     public CupcakeMenu getMenu() {
         if (!hasEnoughIngredientsForCupcake()) {
-            return new CupcakeMenu(List.of(), List.of(), List.of(), List.of());
+            return new CupcakeMenu(List.of(), List.of(), List.of(), getAvailableDailyCupcakes());
+        } else {
+            return new CupcakeMenu(getAvailableCreams(), getAvailableBases(), getAvailableToppings(), getAvailableDailyCupcakes());
         }
-        return new CupcakeMenu(getAvailableCreams(), getAvailableBases(), getAvailableToppings(), getAvailableDailyCupcakes());
     }
 
     public int getOrderPrice(Order order) {
@@ -35,6 +38,12 @@ public class CupcakeFactory {
         for (String dailyCupcake : order.dailyCupcakes()) {
             storage.removeCupcakeDay(dailyCupcake, 1);
         }
+
+        orderLogs.add(new OrderLog(order, getOrderPrice(order)));
+    }
+
+    public int getTotalRevenue() {
+        return orderLogs.stream().mapToInt(OrderLog::price).sum();
     }
 
     private List<MenuEntry<Cream>> getAvailableCreams() {
