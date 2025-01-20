@@ -16,11 +16,7 @@ public class CupcakeFactory {
         if (!hasEnoughIngredientsForCupcake()) {
             return new CupcakeMenu(List.of(), List.of(), List.of(), List.of());
         }
-        return new CupcakeMenu(this.getAvailableCreams(), this.getAvailableBases(), this.getAvailableToppings(), List.of());
-    }
-
-    public int getOrderPrice(Order order) {
-        return order.getPrice(prices);
+        return new CupcakeMenu(getAvailableCreams(), getAvailableBases(), getAvailableToppings(), getAvailableDailyCupcakes());
     }
 
     public void orderCupcakes(Order order) {
@@ -31,28 +27,38 @@ public class CupcakeFactory {
                 storage.removeTopping(topping, 1);
             }
         }
+
+        for (String dailyCupcake : order.dailyCupcakes()) {
+            storage.removeCupcakeDay(dailyCupcake, 1);
+        }
     }
 
     private List<MenuEntry<Cream>> getAvailableCreams() {
         HashMap<Cream, Integer> creams = storage.getCreams();
         return creams.entrySet().stream().filter(e -> e.getValue() > 0)
-                .map(e -> new MenuEntry<>(e.getKey(), this.prices.getCreamPrice(e.getKey()))).toList();
+                .map(e -> new MenuEntry<>(e.getKey(), prices.getCreamPrice(e.getKey()))).toList();
     }
 
     private List<MenuEntry<CupcakeBase>> getAvailableBases() {
         HashMap<CupcakeBase, Integer> bases = storage.getBases();
         return bases.entrySet().stream().filter(e -> e.getValue() > 0)
-                .map(e -> new MenuEntry<>(e.getKey(), this.prices.getBasePrice(e.getKey()))).toList();
+                .map(e -> new MenuEntry<>(e.getKey(), prices.getBasePrice(e.getKey()))).toList();
     }
 
     private List<MenuEntry<Topping>> getAvailableToppings() {
         HashMap<Topping, Integer> toppings = storage.getToppings();
         return toppings.entrySet().stream().filter(e -> e.getValue() > 0)
-                .map(e -> new MenuEntry<>(e.getKey(), this.prices.getToppingPrice(e.getKey()))).toList();
+                .map(e -> new MenuEntry<>(e.getKey(), prices.getToppingPrice(e.getKey()))).toList();
+    }
+
+    private List<MenuEntry<String>> getAvailableDailyCupcakes() {
+        HashMap<String, Integer> dailyCupcakes = storage.getCupcakesDay();
+        return dailyCupcakes.entrySet().stream().filter(e -> e.getValue() > 0)
+                .map(e -> new MenuEntry<>(e.getKey(), prices.getDailyCupcakePrice(e.getKey()))).toList();
     }
 
     private boolean hasEnoughIngredientsForCupcake() {
-        return !this.getAvailableBases().isEmpty() && !this.getAvailableCreams().isEmpty() && !this.getAvailableToppings().isEmpty();
+        return !getAvailableBases().isEmpty() && !getAvailableCreams().isEmpty() && !getAvailableToppings().isEmpty();
     }
 
 }
