@@ -9,45 +9,51 @@ public class IngredientStorage {
     private HashMap<Cream, Integer> creams = new HashMap<>();
 
     HashMap<CupcakeBase, Integer> getBases() {
-        return new HashMap<>();
+        return bases;
     }
 
     HashMap<Topping, Integer> getToppings() {
-        return new HashMap<>();
+        return toppings;
     }
 
     HashMap<Cream, Integer> getCreams() {
-        return new HashMap<>();
+        return creams;
     }
-
 
 
     void addBase(CupcakeBase base, int quantity) {
 
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
         bases.put(base, bases.getOrDefault(base, 0) + quantity);
-
     }
 
     void addTopping(Topping topping, int quantity) {
-
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
         toppings.put(topping, toppings.getOrDefault(topping, 0) + quantity);
-
     }
 
     void addCream(Cream cream, int quantity) {
-
-        creams.put(cream, creams.getOrDefault(cream,0) + quantity);
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        creams.put(cream, creams.getOrDefault(cream, 0) + quantity);
 
     }
 
     void removeBase(CupcakeBase base, int quantity) {
-
-        int currentQuantity = bases.getOrDefault(base,0);
-
-        if (currentQuantity >= quantity){
-            bases.put(base,currentQuantity - quantity);
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
         }
-        if (bases.get(base)==0){
+        int currentQuantity = bases.getOrDefault(base, 0);
+
+        if (currentQuantity >= quantity) {
+            bases.put(base, currentQuantity - quantity);
+        }
+        if (bases.get(base) == 0) {
 
             bases.remove(base);
 
@@ -56,15 +62,17 @@ public class IngredientStorage {
     }
 
     void removeTopping(Topping topping, int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        int currentQuantity = toppings.getOrDefault(topping, 0);
 
-        int currentQuantity = toppings.getOrDefault(topping,0);
+        if (currentQuantity >= quantity) {
 
-        if(currentQuantity>= quantity){
-
-            toppings.put(topping,currentQuantity -quantity);
+            toppings.put(topping, currentQuantity - quantity);
 
         }
-        if (toppings.get(topping)==0){
+        if (toppings.get(topping) == 0) {
             toppings.remove(topping);
         }
 
@@ -72,6 +80,10 @@ public class IngredientStorage {
     }
 
     void removeCream(Cream cream, int quantity) {
+
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
 
         int currentQuantity = creams.getOrDefault(cream, 0);
 
