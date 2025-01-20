@@ -19,6 +19,10 @@ public class CupcakeFactory {
         return new CupcakeMenu(getAvailableCreams(), getAvailableBases(), getAvailableToppings(), getAvailableDailyCupcakes());
     }
 
+    public int getOrderPrice(Order order) {
+        return order.getPrice(prices);
+    }
+
     public void orderCupcakes(Order order) {
         for (Cupcake cupcake : order.cupcakes()) {
             storage.removeBase(cupcake.base(), 1);
