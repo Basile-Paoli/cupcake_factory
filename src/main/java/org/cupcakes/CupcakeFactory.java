@@ -35,6 +35,9 @@ public class CupcakeFactory {
     }
 
     public CupcakeMenu getMenu() {
+        if (!hasEnoughIngredientsForCupcake()) {
+            return new CupcakeMenu(List.of(), List.of(), List.of(), List.of());
+        }
         return new CupcakeMenu(this.getAvailableCreams(), this.getAvailableBases(), this.getAvailableToppings(), List.of());
     }
 }
