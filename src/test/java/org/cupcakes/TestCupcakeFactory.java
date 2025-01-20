@@ -37,6 +37,7 @@ public class TestCupcakeFactory {
                 Map.entry(Topping.CHOCOLATECHIPS, 1)
         );
         Map<String, Integer> dailyCupcake = new HashMap<>();
+        dailyCupcake.put("test", 4);
 
         price = new Prices(creamPrices, basePrices, toppingPrices, dailyCupcake);
 
@@ -47,9 +48,7 @@ public class TestCupcakeFactory {
         Assertions.assertTrue(menu.creams().contains(new MenuEntry<>(Cream.RASPBERRY, 1)));
         Assertions.assertTrue(menu.bases().contains(new MenuEntry<>(CupcakeBase.VANILLABASE, 1)));
         Assertions.assertTrue(menu.toppings().contains(new MenuEntry<>(Topping.CHOCOLATECHIPS, 1)));
-
-        //Assertions.assertTrue(menu.dailyCupcakes().contains(new MenuEntry<>(Cream.CHOCOLATE, 1)));
-
+        Assertions.assertTrue(menu.dailyCupcakes().contains(new MenuEntry<>("test", 4)));
     }
 
     @Test
