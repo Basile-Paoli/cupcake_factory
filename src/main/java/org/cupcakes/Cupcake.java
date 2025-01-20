@@ -3,8 +3,11 @@ package org.cupcakes;
 import java.util.List;
 
 public record Cupcake(CupcakeBase base, Cream cream, List<Topping> toppings) {
-    public boolean isValid() {
-        return toppings.size() <= 2;
+
+    public Cupcake{
+        if(toppings.size() > 2){
+            throw new IllegalArgumentException("Topping is not valid");
+        }
     }
 
     public int getPrice(Prices prices) {
