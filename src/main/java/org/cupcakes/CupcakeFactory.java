@@ -12,6 +12,27 @@ public class CupcakeFactory {
         this.prices = prices;
     }
 
+    public CupcakeMenu getMenu() {
+        if (!hasEnoughIngredientsForCupcake()) {
+            return new CupcakeMenu(List.of(), List.of(), List.of(), List.of());
+        }
+        return new CupcakeMenu(this.getAvailableCreams(), this.getAvailableBases(), this.getAvailableToppings(), List.of());
+    }
+
+    public int getOrderPrice(Order order) {
+        return order.getPrice(prices);
+    }
+
+    public void orderCupcakes(Order order) {
+        for (Cupcake cupcake : order.cupcakes()) {
+            storage.removeBase(cupcake.base(), 1);
+            storage.removeCream(cupcake.cream(), 1);
+            for (Topping topping : cupcake.toppings()) {
+                storage.removeTopping(topping, 1);
+            }
+        }
+    }
+
     private List<MenuEntry<Cream>> getAvailableCreams() {
         HashMap<Cream, Integer> creams = storage.getCreams();
         return creams.entrySet().stream().filter(e -> e.getValue() > 0)
@@ -34,10 +55,4 @@ public class CupcakeFactory {
         return !this.getAvailableBases().isEmpty() && !this.getAvailableCreams().isEmpty() && !this.getAvailableToppings().isEmpty();
     }
 
-    public CupcakeMenu getMenu() {
-        if (!hasEnoughIngredientsForCupcake()) {
-            return new CupcakeMenu(List.of(), List.of(), List.of(), List.of());
-        }
-        return new CupcakeMenu(this.getAvailableCreams(), this.getAvailableBases(), this.getAvailableToppings(), List.of());
-    }
 }

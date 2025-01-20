@@ -21,6 +21,4 @@ public record Prices(Map<Cream, Integer> creamPrices, Map<CupcakeBase, Integer> 
     public int getDailyCupcakePrice(String dailyCupcake) {
         return dailyCupcakePrices.get(dailyCupcake);
     }
-
-
 }
