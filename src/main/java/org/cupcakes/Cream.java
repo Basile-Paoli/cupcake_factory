@@ -1,7 +1,8 @@
 package org.cupcakes;
 
 public enum Cream {
-    VANILLA,
+    VANILLACREAM,
     CHOCOLATE,
-    RASPBERRY
+    RASPBERRY,
+    CUCUMBER
 }

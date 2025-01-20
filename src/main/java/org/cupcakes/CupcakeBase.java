@@ -4,5 +4,5 @@ public enum CupcakeBase {
     NATURE,
     CHOCOLATE,
     FILLED,
-    VANILLA
+    VANILLABASE
 }

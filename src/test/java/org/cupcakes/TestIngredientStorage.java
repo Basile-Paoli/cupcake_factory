@@ -18,29 +18,19 @@ public class TestIngredientStorage {
 
     @Test
     public void testAddBaseNormal() {
-        storage.addBase(CupcakeBase.VANILLA, 12);
+        storage.addBase(CupcakeBase.VANILLABASE, 12);
 
         Map<CupcakeBase, Integer> bases = storage.getBases();
 
-        Assertions.assertTrue(bases.containsKey(CupcakeBase.VANILLA),
+        Assertions.assertTrue(bases.containsKey(CupcakeBase.VANILLABASE),
                 "Le stockage devrait contenir au moins une base à la vanille");
-        Assertions.assertEquals(12, bases.get(CupcakeBase.VANILLA),
+        Assertions.assertEquals(12, bases.get(CupcakeBase.VANILLABASE),
                 "Il devrait y avoir 12 bases vanille");
     }
 
     @Test
     public void testAddBaseNegative() {
-//        Map<CupcakeBase, Integer> oldBases = new HashMap<>(storage.getBases());
-
         Assertions.assertThrows(Exception.class, () -> storage.addBase(CupcakeBase.CHOCOLATE, -1));
-
-//        Map<CupcakeBase, Integer> newBases = storage.getBases();
-//
-//        Assertions.assertEquals(oldBases, newBases,
-//                "Le stockage de base ne devrait pas changer lors de l'ajout d'une quantité négative");
-//
-//        Assertions.assertFalse(newBases.containsKey(CupcakeBase.CHOCOLATE),
-//                "La base VANILLA ne devrait pas être ajoutée avec une quantité négative");
     }
 
     // --------------------------------------------------------------------------- //
@@ -59,18 +49,7 @@ public class TestIngredientStorage {
 
     @Test
     public void testAddToppingNegative() {
-
-//        Map<Topping, Integer> oldTopping = new HashMap<>(storage.getToppings());
-
         Assertions.assertThrows(Exception.class, () -> storage.addTopping(Topping.COOKIEDOUGHT, -12));
-
-//        Map<Topping, Integer> newTopping = storage.getToppings();
-//
-//        Assertions.assertEquals(oldTopping, newTopping,
-//                "Le stockage de topping ne devrait pas changer lors de l'ajout d'une quantité négative");
-//
-//        Assertions.assertFalse(newTopping.containsKey(Topping.COOKIEDOUGHT),
-//                "Le topping COOKIEDOUGHT ne devrait pas être ajoutée avec une quantité négative");
     }
 
     // --------------------------------------------------------------------------- //
@@ -89,59 +68,48 @@ public class TestIngredientStorage {
 
     @Test
     public void testAddCreamNegative() {
-
-//        Map<Cream, Integer> oldCreams = new HashMap<>(storage.getCreams());
-
-        Assertions.assertThrows(Exception.class, () -> storage.addCream(Cream.VANILLA, -12));
-
-//        Map<Cream, Integer> newCream = storage.getCreams();
-//
-//        Assertions.assertEquals(oldCreams, newCream,
-//                "Le stockage de crème ne devrait pas changer lors de l'ajout d'une quantité négative");
-//
-//        Assertions.assertFalse(newCream.containsKey(Cream.VANILLA),
-//                "La crème VANILLE ne devrait pas être ajoutée avec une quantité négative");
+        Assertions.assertThrows(Exception.class, () -> storage.addCream(Cream.VANILLACREAM, -12));
     }
 
 
     // --------------------------------------------------------------------------- //
     @Test
     public void testRemoveNormal() {
-        storage.addBase(CupcakeBase.VANILLA, 1);
-        storage.removeBase(CupcakeBase.VANILLA, 1);
+        storage.addBase(CupcakeBase.VANILLABASE, 1);
+        storage.removeBase(CupcakeBase.VANILLABASE, 1);
         var hashmapBase = storage.getBases();
-        Assertions.assertFalse(hashmapBase.containsKey(CupcakeBase.VANILLA),
+        Assertions.assertFalse(hashmapBase.containsKey(CupcakeBase.VANILLABASE),
                 "La base vanilla ne devrait plus exister dans le stockage");
     }
 
     @Test
     public void testRemoveNormalButStillHaveInDB() {
-        storage.addBase(CupcakeBase.VANILLA, 12);
-        storage.removeBase(CupcakeBase.VANILLA, 5);
+        storage.addBase(CupcakeBase.VANILLABASE, 12);
+        storage.removeBase(CupcakeBase.VANILLABASE, 5);
 
         Map<CupcakeBase, Integer> base = storage.getBases();
-        Assertions.assertTrue(base.containsKey(CupcakeBase.VANILLA),
+        Assertions.assertTrue(base.containsKey(CupcakeBase.VANILLABASE),
                 "La base vanilla devrait exister dans le stockage");
 
-        Assertions.assertEquals(7, base.get(CupcakeBase.VANILLA),
+        Assertions.assertEquals(7, base.get(CupcakeBase.VANILLABASE),
                 "Il devrait rester seulement 7 base vanille dans le stockage");
     }
 
     @Test
     public void testRemoveNormalButRemoveMoreThanHaveInDB() {
-        storage.addBase(CupcakeBase.VANILLA, 2);
-        Assertions.assertThrows(Exception.class, () -> storage.removeBase(CupcakeBase.VANILLA, 5));
+        storage.addBase(CupcakeBase.VANILLABASE, 2);
+        Assertions.assertThrows(Exception.class, () -> storage.removeBase(CupcakeBase.VANILLABASE, 5));
     }
 
     @Test
     public void testRemoveBaseNegative() {
-        storage.addBase(CupcakeBase.VANILLA, 1);
-        Assertions.assertThrows(Exception.class, () -> storage.removeBase(CupcakeBase.VANILLA, -1));
+        storage.addBase(CupcakeBase.VANILLABASE, 1);
+        Assertions.assertThrows(Exception.class, () -> storage.removeBase(CupcakeBase.VANILLABASE, -1));
     }
 
     @Test
     public void testRemoveBaseDontExist() {
-        Assertions.assertThrows(Exception.class, ()->storage.removeBase(CupcakeBase.VANILLA, 1));
+        Assertions.assertThrows(Exception.class, ()->storage.removeBase(CupcakeBase.VANILLABASE, 1));
     }
 
     // --------------------------------------------------------------------------- //
