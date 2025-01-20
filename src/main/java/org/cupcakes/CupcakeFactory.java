@@ -1,17 +1,18 @@
 package org.cupcakes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class CupcakeFactory {
     private final IngredientStorage storage;
     private final Prices prices;
-    private List<OrderLog> orderLogs;
+    private ArrayList<OrderLog> orderLogs;
 
     public CupcakeFactory(IngredientStorage storage, Prices prices) {
         this.storage = storage;
         this.prices = prices;
-        this.orderLogs = List.of();
+        this.orderLogs = new ArrayList<>();
     }
 
     public CupcakeMenu getMenu() {
